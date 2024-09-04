@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String        @id @default(uuid())
+  email          String?       @unique
+  username       String?       @unique
+  password       String?
+  first_name     String?
+  last_name      String?
+  avatar         String?
+  school         String?
+  phone          String?
+  address        String?
+  district       District?
+  dob            DateTime?
+  account_status AccountStatus @default(Pending)
+  role           Roles         @default(Student)
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+  deleted_at     DateTime?
+  is_deleted     Boolean       @default(false)
+
+  @@map("users")
+}
+
+enum Roles {
+  Admin
+  Student
+}
+
+enum AccountStatus {
+  Pending
+  Verified
+  Banned
+}
+
+enum District {
+  Ampara
+  Batticaloa
+  Trincomalee
+  Anuradhapura
+  Polonnaruwa
+  Badulla
+  Moneragala
+  Colombo
+  Gampaha
+  Kalutara
+  Galle
+  Hambantota
+  Matara
+  Jaffna
+  Kilinochchi
+  Mannar
+  Mullaitivu
+  Vavuniya
+  Kandy
+  Matale
+  NuwaraEliya
+  Kegalle
+  Ratnapura
+  Kurunegala
+  Puttalam
+}
